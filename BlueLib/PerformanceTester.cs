@@ -95,21 +95,21 @@ namespace BlueLib
         }
 
         /// <summary>
-        /// Check result type is int or not.
-        /// </summary>
-        /// <returns>True if result type is int. otherwise false.</returns>
-        public bool IsResultInt()
-        {
-            return this.Type == typeof(int);
-        }
-
-        /// <summary>
         /// Check result type is TimeSpan or not.
         /// </summary>
         /// <returns>True if result type is TimeSpan. otherwise false.</returns>
         public bool IsResultTimeSpan()
         {
             return this.Type == typeof(TimeSpan);
+        }
+
+        /// <summary>
+        /// Check result type is int or not.
+        /// </summary>
+        /// <returns>True if result type is int. otherwise false.</returns>
+        public bool IsResultInt()
+        {
+            return this.Type == typeof(int);
         }
 
         /// <summary>

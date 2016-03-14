@@ -19,6 +19,24 @@ namespace BlueLib
         private Action a;
         private PerformanceTesterMethod ptm = PerformanceTesterMethod.Stopwatch;
         private object result;
+        
+        /// <summary>
+        /// If it returns null, Result is null.
+        /// </summary>
+        public Type Type
+        {
+            get
+            {
+                if (result is TimeSpan)
+                    return typeof(TimeSpan);
+                else if (result is int)
+                    return typeof(int);
+                else if (result is DateTime)
+                    return typeof(DateTime);
+                else
+                    return null;
+            }
+        }
 
         public object Result
         {
@@ -29,7 +47,7 @@ namespace BlueLib
         }
 
         /// <summary>
-        /// PerformanceTester using an Action. Method would be Stopwatch.
+        /// PerformanceTester using an Action. Method will be Stopwatch.
         /// </summary>
         /// <param name="a">Action to test performance.</param>
         public PerformanceTester(Action a)
@@ -49,9 +67,9 @@ namespace BlueLib
         }
 
         /// <summary>
-        /// 
+        /// Run test performance method.
         /// </summary>
-        /// <returns></returns>
+        /// <returns>TimeSpan for Stopwatch. int for TickCount. DateTime for Time</returns>
         public object TestPerformance()
         {
             switch (ptm)
@@ -75,8 +93,37 @@ namespace BlueLib
             }
             return result;
         }
+
+        /// <summary>
+        /// Check result type is int or not.
+        /// </summary>
+        /// <returns>True if result type is int. otherwise false.</returns>
+        public bool IsResultInt()
+        {
+            return this.Type == typeof(int);
+        }
+
+        /// <summary>
+        /// Check result type is TimeSpan or not.
+        /// </summary>
+        /// <returns>True if result type is TimeSpan. otherwise false.</returns>
+        public bool IsResultTimeSpan()
+        {
+            return this.Type == typeof(TimeSpan);
+        }
+
+        /// <summary>
+        /// Check result type is DateTime or not.
+        /// </summary>
+        /// <returns>True if result type is DateTime. otherwise false.</returns>
+        public bool IsResultDateTime()
+        {
+            return this.Type == typeof(DateTime);
+        }
     }
 
+    // WIP (Work in progress)
+    /*
     public struct PerformanceTesterResult
     {
         private TimeSpan? ts;
@@ -108,20 +155,20 @@ namespace BlueLib
             }
         }
 
-        public static explicit operator TimeSpan(PerformanceTesterResult ptr)
+        public static implicit operator TimeSpan(PerformanceTesterResult ptr)
         {
             SecurityCheck(ptr.ts.GetType(), ptr.type);
             return (TimeSpan)ptr;
         }
 
-        public static explicit operator int(PerformanceTesterResult ptr)
+        public static implicit operator int(PerformanceTesterResult ptr)
         {
             //PerformanceTesterResult temp = ptr;
             //SecurityCheck(temp.tc.GetType(), temp.type);
             return (int)ptr;
         }
 
-        public static explicit operator DateTime(PerformanceTesterResult ptr)
+        public static implicit operator DateTime(PerformanceTesterResult ptr)
         {
             SecurityCheck(ptr.dt.GetType(), ptr.type);
             return (DateTime)ptr;
@@ -133,4 +180,5 @@ namespace BlueLib
                 throw new InvalidCastException();
         }
     }
+    */
 }
